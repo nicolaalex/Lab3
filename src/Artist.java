@@ -1,4 +1,4 @@
-class Artist {
+public class Artist {
     private String name;
     private int birthYear;
     private Integer deathYear;

@@ -1,21 +1,16 @@
-import javax.swing.*;
-import javax.swing.table.*;
+/* import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
-import java.io.*;
-import java.util.*;
 import java.util.List;
-import java.util.stream.Collectors;
-import org.jfree.chart.*;
-import org.jfree.chart.plot.PlotOrientation;
-import org.jfree.data.category.DefaultCategoryDataset;
 
-class ChartPanel extends JPanel {
-    public ChartPanel(List<Artist> artists) {
-        DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-        artists.stream().collect(Collectors.groupingBy(Artist::getNationality, Collectors.summingInt(Artist::getWorks)))
-                .forEach(dataset::setValue);
-        JFreeChart chart = ChartFactory.createBarChart("Works by Nationality", "Nationality", "Works", dataset, PlotOrientation.VERTICAL, false, true, false);
-        add(new ChartPanel(chart));
+class StatsPanel extends JPanel {
+    public StatsPanel(List<Artist> artists) {
+        setLayout(new GridLayout(3, 1));
+        int totalWorks = artists.stream().mapToInt(Artist::getWorks).sum();
+        double avgWorks = artists.stream().mapToInt(Artist::getWorks).average().orElse(0);
+        long uniqueNationalities = artists.stream().map(Artist::getNationality).distinct().count();
+        add(new JLabel("Total Works: " + totalWorks));
+        add(new JLabel("Average Works per Artist: " + avgWorks));
+        add(new JLabel("Unique Nationalities: " + uniqueNationalities));
     }
 }
+*/
