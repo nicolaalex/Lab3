@@ -1,23 +1,24 @@
+import javax.swing.*;
+import javax.swing.table.*;
+import java.awt.*;
+import java.util.List;
+
 class TablePanel extends JPanel {
     private JTable table;
-    private List<DataItem> data;
+    private List<Artist> artists;
 
-    public TablePanel(List<DataItem> data) {
-        this.data = data;
+    public TablePanel(List<Artist> artists) {
+        this.artists = artists;
         setLayout(new BorderLayout());
-
-        // Table data
-        String[] columnNames = {"Name", "Value", "Category"};
-        Object[][] tableData = data.stream()
-                .map(item -> new Object[]{item.getName(), item.getValue(), item.getCategory()})
+        String[] columnNames = {"Name", "Birth Year", "Death Year", "Nationality", "Works"};
+        Object[][] data = artists.stream()
+                .map(a -> new Object[]{a.getName(), a.getBirthYear(), a.getDeathYear(), a.getNationality(), a.getWorks()})
                 .toArray(Object[][]::new);
-
-        table = new JTable(tableData, columnNames);
-        JScrollPane scrollPane = new JScrollPane(table);
-        add(scrollPane, BorderLayout.CENTER);
+        DefaultTableModel model = new DefaultTableModel(data, columnNames);
+        table = new JTable(model);
+        table.setAutoCreateRowSorter(true);
+        add(new JScrollPane(table), BorderLayout.CENTER);
     }
 
-    public JTable getTable() {
-        return table;
-    }
+    public JTable getTable() { return table; }
 }

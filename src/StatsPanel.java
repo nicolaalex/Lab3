@@ -1,21 +1,21 @@
-class StatsPanel extends JPanel {
-    private JLabel countLabel;
-    private JLabel avgLabel;
-    private JLabel sumLabel;
+import javax.swing.*;
+import javax.swing.table.*;
+import java.awt.*;
+import java.awt.event.*;
+import java.io.*;
+import java.util.*;
+import java.util.List;
+import java.util.stream.Collectors;
+import org.jfree.chart.*;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.data.category.DefaultCategoryDataset;
 
-    public StatsPanel(List<DataItem> data) {
-        setLayout(new GridLayout(1, 3));
-
-        int count = data.size();
-        double avg = data.stream().mapToInt(DataItem::getValue).average().orElse(0);
-        int sum = data.stream().mapToInt(DataItem::getValue).sum();
-
-        countLabel = new JLabel("Count: " + count);
-        avgLabel = new JLabel("Avg: " + avg);
-        sumLabel = new JLabel("Sum: " + sum);
-
-        add(countLabel);
-        add(avgLabel);
-        add(sumLabel);
+class ChartPanel extends JPanel {
+    public ChartPanel(List<Artist> artists) {
+        DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+        artists.stream().collect(Collectors.groupingBy(Artist::getNationality, Collectors.summingInt(Artist::getWorks)))
+                .forEach(dataset::setValue);
+        JFreeChart chart = ChartFactory.createBarChart("Works by Nationality", "Nationality", "Works", dataset, PlotOrientation.VERTICAL, false, true, false);
+        add(new ChartPanel(chart));
     }
 }
