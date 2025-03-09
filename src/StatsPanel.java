@@ -1,4 +1,7 @@
-/* import javax.swing.*;
+/*
+// StatsPanel that shows aggregate statistics
+
+import javax.swing.*;
 import java.awt.*;
 import java.util.List;
 

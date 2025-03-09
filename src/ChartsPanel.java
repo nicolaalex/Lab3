@@ -1,4 +1,7 @@
-/*import org.jfree.chart.*;
+/*
+// ChartPanel that visualize works by nationality
+
+import org.jfree.chart.*;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.category.DefaultCategoryDataset;
 

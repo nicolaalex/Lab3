@@ -1,3 +1,6 @@
+// TablePanel that display artists in a sortable table
+
+
 import javax.swing.*;
 import javax.swing.table.*;
 import java.awt.*;

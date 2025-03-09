@@ -1,3 +1,5 @@
+// Main application class that loads the artist data from a CSV file and processes it
+
 import javax.swing.*;
 import java.awt.*;
 import java.io.*;
@@ -11,10 +13,11 @@ public class FemaleArtistsVisualization {
 
     public static void main(String[] args) {
         artists = loadArtists(DATA_FILE);
-        consoleTest(artists); // A. Console Test
-        SwingUtilities.invokeLater(() -> createAndShowGUI(artists)); // B. GUI Test
+        consoleTest(artists); // Console Test
+        SwingUtilities.invokeLater(() -> createAndShowGUI(artists)); // GUI Test
     }
 
+    // Loads the artist data from the file
     private static List<Artist> loadArtists(String fileName) {
         List<Artist> artistList = new ArrayList<>();
         try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
@@ -26,7 +29,7 @@ public class FemaleArtistsVisualization {
                     String name = parts[0].trim();
                     String country = parts[1].trim();
 
-                    // Parse the birth year, checking for empty strings
+                    // Parse the birth year and checks for empty strings
                     int birthYear = parseYear(parts[2].trim());
 
                     // Parse the death year (it can be empty)
@@ -34,7 +37,7 @@ public class FemaleArtistsVisualization {
 
                     String gender = parts[4].trim();
 
-                    // Parse the number of artworks, checking for empty strings
+                    // Parse the number of artworks and checks for empty strings
                     int works = parts[5].trim().isEmpty() ? 0 : Integer.parseInt(parts[5].trim());
 
                     artistList.add(new Artist(name, birthYear, deathYear, country, works));
@@ -46,7 +49,7 @@ public class FemaleArtistsVisualization {
         return artistList;
     }
 
-    // Helper method to parse the year, returning 0 if the input is empty or invalid
+    // Helper method to parse the year. Returns 0 if the input is empty or invalid
     private static int parseYear(String yearString) {
         if (yearString.isEmpty()) {
             return 0; // Default value for missing year
@@ -61,25 +64,25 @@ public class FemaleArtistsVisualization {
 
 
 
-    // Console Test for Part A
+    // Console Test
     private static void consoleTest(List<Artist> artists) {
-        // A1: Print out the attributes of the first data item
+        // Print out the attributes of the first data item
         if (!artists.isEmpty()) {
             System.out.println("First artist: " + artists.get(0));
         }
 
-        // A2: Print out the attributes of the 10th item (if available)
+        // Print out the attributes of the 10th item (if available)
         if (artists.size() >= 10) {
             System.out.println("10th artist: " + artists.get(9));
         } else {
             System.out.println("There are less than 10 artists in the data.");
         }
 
-        // A3: Display the total number of entries in the data
+        // Display the total number of entries in the data
         System.out.println("Total number of artists: " + artists.size());
     }
 
-    // GUI Test for Part B
+    // GUI Test
     private static void createAndShowGUI(List<Artist> artists) {
         JFrame frame = new JFrame("Female Artists Visualization");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -91,7 +94,7 @@ public class FemaleArtistsVisualization {
 
         // Add TablePanel to the frame
         frame.add(new JLabel("Female Artists Visualization", JLabel.CENTER), BorderLayout.NORTH); // B2: Application has a clear title
-        frame.add(tablePanel, BorderLayout.CENTER); // B1: Data appears in TablePanel
+        frame.add(tablePanel, BorderLayout.CENTER); // Data appears in TablePanel
 
         frame.setVisible(true);
     }

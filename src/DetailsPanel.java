@@ -1,4 +1,7 @@
-/*import javax.swing.*;
+/*
+// DetailsPanel that shows details of a selected artist
+
+import javax.swing.*;
 import java.awt.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
