@@ -5,7 +5,8 @@ import java.util.*;
 import java.util.List;
 
 public class FemaleArtistsVisualization {
-    private static final String DATA_FILE = "femaleartists.csv";
+    private static final String DATA_FILE = "src/femaleartists.csv";
+
     private static List<Artist> artists;
 
     public static void main(String[] args) {
@@ -18,16 +19,25 @@ public class FemaleArtistsVisualization {
         List<Artist> artistList = new ArrayList<>();
         try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
             String line;
-            reader.readLine(); // Skip header
+            reader.readLine(); // Skip the header line
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split(",");
-                if (parts.length == 5) {
+                if (parts.length == 6) {  // Ensure all columns are present
                     String name = parts[0].trim();
-                    int birthYear = Integer.parseInt(parts[1].trim());
-                    Integer deathYear = parts[2].trim().isEmpty() ? null : Integer.parseInt(parts[2].trim());
-                    String nationality = parts[3].trim();
-                    int works = Integer.parseInt(parts[4].trim());
-                    artistList.add(new Artist(name, birthYear, deathYear, nationality, works));
+                    String country = parts[1].trim();
+
+                    // Parse the birth year, checking for empty strings
+                    int birthYear = parseYear(parts[2].trim());
+
+                    // Parse the death year (it can be empty)
+                    Integer deathYear = parts[3].trim().isEmpty() ? null : parseYear(parts[3].trim());
+
+                    String gender = parts[4].trim();
+
+                    // Parse the number of artworks, checking for empty strings
+                    int works = parts[5].trim().isEmpty() ? 0 : Integer.parseInt(parts[5].trim());
+
+                    artistList.add(new Artist(name, birthYear, deathYear, country, works));
                 }
             }
         } catch (IOException e) {
@@ -35,6 +45,21 @@ public class FemaleArtistsVisualization {
         }
         return artistList;
     }
+
+    // Helper method to parse the year, returning 0 if the input is empty or invalid
+    private static int parseYear(String yearString) {
+        if (yearString.isEmpty()) {
+            return 0; // Default value for missing year
+        }
+        try {
+            return Integer.parseInt(yearString);
+        } catch (NumberFormatException e) {
+            System.out.println("Error parsing year: " + yearString);
+            return 0; // Default value for invalid year
+        }
+    }
+
+
 
     // Console Test for Part A
     private static void consoleTest(List<Artist> artists) {
