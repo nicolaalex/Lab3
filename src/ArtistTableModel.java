@@ -25,13 +25,20 @@ class ArtistTableModel extends AbstractTableModel {
     public Object getValueAt(int rowIndex, int columnIndex) {
         Artist artist = artists.get(rowIndex);
         switch (columnIndex) {
-            case 0: return artist.getName();
-            case 1: return artist.getNationality();
-            case 2: return artist.getBirthYear();
-            case 3: return artist.getDeathYear();
-            case 4: return artist.getGender();
-            case 5: return artist.getWorks();
-            default: return null;
+            case 0:
+                return artist.getName();
+            case 1:
+                return artist.getNationality();
+            case 2:
+                return artist.getBirthYear();
+            case 3:
+                return artist.getDeathYear();
+            case 4:
+                return artist.getGender();
+            case 5:
+                return artist.getWorks();
+            default:
+                return null;
         }
     }
 
@@ -43,5 +50,5 @@ class ArtistTableModel extends AbstractTableModel {
     // Set new artist data when filters are applied
     public void setArtists(List<Artist> artists) {
         this.artists = artists;
-
-
+    }
+}

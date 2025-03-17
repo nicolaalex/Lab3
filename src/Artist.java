@@ -1,4 +1,4 @@
-// Represents an artist with details such as name, birth year, death year, country, and number of artworks
+// Artist class with gender field
 
 public class Artist {
     private String name;
@@ -6,25 +6,52 @@ public class Artist {
     private Integer deathYear;
     private String nationality;
     private int works;
+    private String gender;  // Added gender field
 
-    // Constructor to initialize the Artist object with provided values.
-    public Artist(String name, int birthYear, Integer deathYear, String nationality, int works) {
+    // Constructor
+    public Artist(String name, int birthYear, Integer deathYear, String nationality, int works, String gender) {
         this.name = name;
         this.birthYear = birthYear;
         this.deathYear = deathYear;
         this.nationality = nationality;
         this.works = works;
+        this.gender = gender;  // Initialize gender
     }
 
-    // Getters for each field to retrieve artist info
-    public String getName() { return name; }
-    public int getBirthYear() { return birthYear; }
-    public Integer getDeathYear() { return deathYear; }
-    public String getNationality() { return nationality; }
-    public int getWorks() { return works; }
+    // Getters and Setters
+    public String getName() {
+        return name;
+    }
+
+    public int getBirthYear() {
+        return birthYear;
+    }
+
+    public Integer getDeathYear() {
+        return deathYear;
+    }
+
+    public String getNationality() {
+        return nationality;
+    }
+
+    public int getWorks() {
+        return works;
+    }
+
+    public String getGender() {
+        return gender;  // Getter for gender
+    }
 
     @Override
     public String toString() {
-        return name + " (" + birthYear + " - " + (deathYear != null ? deathYear : "present") + ") | " + nationality + " | Works: " + works;
+        return "Artist{" +
+                "name='" + name + '\'' +
+                ", birthYear=" + birthYear +
+                ", deathYear=" + deathYear +
+                ", nationality='" + nationality + '\'' +
+                ", works=" + works +
+                ", gender='" + gender + '\'' +
+                '}';
     }
 }
