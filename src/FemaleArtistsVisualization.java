@@ -63,7 +63,6 @@ public class FemaleArtistsVisualization {
     }
 
 
-
     // Console Test
     private static void consoleTest(List<Artist> artists) {
         // Print out the attributes of the first data item
@@ -89,12 +88,14 @@ public class FemaleArtistsVisualization {
         frame.setSize(900, 600);
         frame.setLayout(new BorderLayout());
 
-        // Create TablePanel
+        // Create TablePanel and StatsPanel
         TablePanel tablePanel = new TablePanel(artists);
+        StatsPanel statsPanel = new StatsPanel(artists);
 
-        // Add TablePanel to the frame
-        frame.add(new JLabel("Female Artists Visualization", JLabel.CENTER), BorderLayout.NORTH); // B2: Application has a clear title
-        frame.add(tablePanel, BorderLayout.CENTER); // Data appears in TablePanel
+        // Add components to frame
+        frame.add(new JLabel("Female Artists Visualization", JLabel.CENTER), BorderLayout.NORTH);
+        frame.add(tablePanel, BorderLayout.CENTER);
+        frame.add(statsPanel, BorderLayout.SOUTH); // Add StatsPanel
 
         frame.setVisible(true);
     }

@@ -1,4 +1,3 @@
-/*
 // StatsPanel that shows aggregate statistics
 
 import javax.swing.*;
@@ -16,4 +15,3 @@ class StatsPanel extends JPanel {
         add(new JLabel("Unique Nationalities: " + uniqueNationalities));
     }
 }
-*/
