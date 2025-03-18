@@ -1,47 +1,44 @@
 // Artist class with gender field
 
+import java.util.Scanner;
+
 public class Artist {
     private String name;
     private int birthYear;
     private Integer deathYear;
     private String nationality;
     private int works;
-    private String gender;  // Added gender field
+    private String gender;
 
-    // Constructor
+    // Constructor to initialize the artist object from CSV data
     public Artist(String name, int birthYear, Integer deathYear, String nationality, int works, String gender) {
         this.name = name;
         this.birthYear = birthYear;
         this.deathYear = deathYear;
         this.nationality = nationality;
         this.works = works;
-        this.gender = gender;  // Initialize gender
+        this.gender = gender;
     }
 
-    // Getters and Setters
-    public String getName() {
-        return name;
+    // Constructor that takes a CSV line and parses it
+    public Artist(String csvLine) {
+        Scanner scanner = new Scanner(csvLine);
+        scanner.useDelimiter(",");
+        this.name = scanner.next().replaceAll("\"", "");  // Remove quotes
+        this.birthYear = Integer.parseInt(scanner.next());
+        this.deathYear = scanner.hasNext() && !scanner.next().equals("null") ? Integer.parseInt(scanner.next()) : null;
+        this.nationality = scanner.next().replaceAll("\"", "");
+        this.works = Integer.parseInt(scanner.next());
+        this.gender = scanner.next().replaceAll("\"", "");
     }
 
-    public int getBirthYear() {
-        return birthYear;
-    }
-
-    public Integer getDeathYear() {
-        return deathYear;
-    }
-
-    public String getNationality() {
-        return nationality;
-    }
-
-    public int getWorks() {
-        return works;
-    }
-
-    public String getGender() {
-        return gender;  // Getter for gender
-    }
+    // Getters (same as before)
+    public String getName() { return name; }
+    public int getBirthYear() { return birthYear; }
+    public Integer getDeathYear() { return deathYear; }
+    public String getNationality() { return nationality; }
+    public int getWorks() { return works; }
+    public String getGender() { return gender; }
 
     @Override
     public String toString() {

@@ -1,23 +1,72 @@
-// TablePanel to display the artists' data in a JTable
+// The TablePanel class display and manage the table of artists in the GUI
 
 import javax.swing.*;
+import javax.swing.table.*;
 import java.awt.*;
+import java.awt.event.*;
 import java.util.List;
 
-class TablePanel extends JPanel {
+public class TablePanel extends JPanel {
     private JTable table;
     private ArtistTableModel tableModel;
+    private boolean[] sortAscending; //sorting for each column (true for ascending, false for descending)
+    private JTableHeader tableHeader;
 
     public TablePanel(List<Artist> artists) {
         setLayout(new BorderLayout());
+
+        // Initialize table model with artist data and set up the table
         tableModel = new ArtistTableModel(artists);
         table = new JTable(tableModel);
+        tableHeader = table.getTableHeader();
+
+        // Enable column sorting when header is clicked
+        tableHeader.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                int columnIndex = table.columnAtPoint(e.getPoint()); // Identify clicked column
+                toggleSort(columnIndex); // Toggle sorting order on column click
+            }
+        });
+
+        sortAscending = new boolean[tableModel.getColumnCount()]; // Initialize sorting order for each column
+        updateColumnHeaders(-1); // Set no sorting initially
+
+        // Add table to the panel with scroll support
         add(new JScrollPane(table), BorderLayout.CENTER);
     }
 
-    // Update the table data when filters are applied
-    public void updateData(List<Artist> newArtists) {
-        tableModel.setArtists(newArtists);
-        tableModel.fireTableDataChanged();  // Refresh the table
+    // Updates the data in the table
+    public void updateData(List<Artist> artists) {
+        tableModel.setData(artists);
+    }
+
+    // Toggles sorting order and updates the table based on the column clicked
+    private void toggleSort(int columnIndex) {
+        sortAscending[columnIndex] = !sortAscending[columnIndex];
+
+        // Sort the table data based on the selected column and direction
+        tableModel.sortByColumn(columnIndex, sortAscending[columnIndex]);
+        updateColumnHeaders(columnIndex);
+    }
+
+    // Updates the column headers with sorting indicators (▲ or ▼)
+    private void updateColumnHeaders(int sortedColumnIndex) {
+        TableColumnModel columnModel = table.getColumnModel();
+
+        // Loop through each column to update the header based on the sorting state
+        for (int i = 0; i < tableModel.getColumnCount(); i++) {
+            TableColumn column = columnModel.getColumn(i);
+            String columnName = tableModel.getColumnName(i);
+
+            // Add sort direction indicator to the sorted column header
+            if (i == sortedColumnIndex) {
+                column.setHeaderValue(columnName + (sortAscending[i] ? " ▲" : " ▼"));
+            } else {
+                column.setHeaderValue(columnName);
+            }
+        }
+
+        tableHeader.repaint();
     }
 }
