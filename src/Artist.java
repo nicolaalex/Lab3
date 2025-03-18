@@ -1,5 +1,3 @@
-// Artist class with gender field
-
 import java.util.Scanner;
 
 public class Artist {
@@ -40,15 +38,9 @@ public class Artist {
     public int getWorks() { return works; }
     public String getGender() { return gender; }
 
+    // Updated toString method for desired output format
     @Override
     public String toString() {
-        return "Artist{" +
-                "name='" + name + '\'' +
-                ", birthYear=" + birthYear +
-                ", deathYear=" + deathYear +
-                ", nationality='" + nationality + '\'' +
-                ", works=" + works +
-                ", gender='" + gender + '\'' +
-                '}';
+        return name + ", " + birthYear + ", " + (deathYear != null ? deathYear : "") + ", " + nationality + ", " + works + ", " + gender;
     }
 }
