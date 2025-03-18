@@ -51,7 +51,7 @@ public class ArtistData {
                 }
             }
 
-            // Display total number of artists (including invalid ones)
+            // Display total number of artists
             System.out.println("Total number of artists: " + artists.size());
 
         } catch (IOException e) {

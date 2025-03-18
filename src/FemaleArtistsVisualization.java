@@ -62,10 +62,11 @@ public class FemaleArtistsVisualization {
         frame.setLayout(new BorderLayout());
 
         // Create components for the table, stats, filters, and details panel
-        DetailsPanel detailsPanel = new DetailsPanel(); // New details panel to show selected artist details
+        DetailsPanel detailsPanel = new DetailsPanel(); // show selected artist details
         TablePanel tablePanel = new TablePanel(filteredArtists, detailsPanel);
         StatsPanel statsPanel = new StatsPanel(filteredArtists);
         FilterPanel filterPanel = new FilterPanel(tablePanel, statsPanel, artists);
+        ChartPanel chartPanel = new ChartPanel(filteredArtists);
 
         // Add a listener to update the details panel when a row in the table is selected
         tablePanel.getTable().getSelectionModel().addListSelectionListener(e -> {
@@ -78,12 +79,27 @@ public class FemaleArtistsVisualization {
             }
         });
 
-        // Add components to the frame
+        // Set up layout to display table and chart together
+        JPanel mainPanel = new JPanel();
+        mainPanel.setLayout(new BorderLayout());
+
+        JPanel topPanel = new JPanel();
+        topPanel.setLayout(new BorderLayout());
+
+        // Add the filter panel above the stats panel
+        topPanel.add(filterPanel, BorderLayout.NORTH);  // Place the filter panel here
+        topPanel.add(tablePanel, BorderLayout.CENTER);  // Table panel in the center
+        topPanel.add(statsPanel, BorderLayout.EAST);    // Stats panel on the right
+
+        JPanel bottomPanel = new JPanel();
+        bottomPanel.setLayout(new BorderLayout());
+        bottomPanel.add(chartPanel, BorderLayout.CENTER);
+        bottomPanel.add(detailsPanel, BorderLayout.WEST); // Display artist details on the left side
+
+        // Add components to the main frame
         frame.add(new JLabel("Female Artists Visualization", JLabel.CENTER), BorderLayout.NORTH);
-        frame.add(filterPanel, BorderLayout.SOUTH);
-        frame.add(tablePanel, BorderLayout.CENTER);
-        frame.add(statsPanel, BorderLayout.EAST);
-        frame.add(detailsPanel, BorderLayout.WEST); // Add the details panel on the left side
+        frame.add(topPanel, BorderLayout.CENTER); // Top part: Filter + Table + Stats
+        frame.add(bottomPanel, BorderLayout.SOUTH); // Bottom part: Chart + Details
 
         frame.setVisible(true);
     }

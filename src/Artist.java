@@ -32,7 +32,7 @@ public class Artist {
         this.gender = scanner.next().replaceAll("\"", "");
     }
 
-    // Getters (same as before)
+    // Getters
     public String getName() { return name; }
     public int getBirthYear() { return birthYear; }
     public Integer getDeathYear() { return deathYear; }
@@ -40,7 +40,7 @@ public class Artist {
     public int getWorks() { return works; }
     public String getGender() { return gender; }
 
-    // Updated toString method for desired output format
+
     @Override
     public String toString() {
         return name + ", " + birthYear + ", " + (deathYear != null ? deathYear : "") + ", " + nationality + ", " + works + ", " + gender;

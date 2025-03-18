@@ -50,7 +50,7 @@ public class TablePanel extends JPanel {
         add(new JScrollPane(table), BorderLayout.CENTER);
     }
 
-    // Returns the JTable instance for external access (e.g., from the main class)
+    // Returns the JTable instance for external access (ex. from the main class)
     public JTable getTable() {
         return table;
     }
