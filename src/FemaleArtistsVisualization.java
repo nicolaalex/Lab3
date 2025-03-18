@@ -1,6 +1,5 @@
 // Main application class that loads the artist data from a CSV file and processes it
 
-
 import javax.swing.*;
 import java.awt.*;
 import java.io.*;
@@ -59,19 +58,32 @@ public class FemaleArtistsVisualization {
     private static void createAndShowGUI() {
         JFrame frame = new JFrame("Female Artists Visualization");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(900, 600);
+        frame.setSize(1000, 600);
         frame.setLayout(new BorderLayout());
 
-        // Create components for the table, stats, and filters
-        TablePanel tablePanel = new TablePanel(filteredArtists);
+        // Create components for the table, stats, filters, and details panel
+        DetailsPanel detailsPanel = new DetailsPanel(); // New details panel to show selected artist details
+        TablePanel tablePanel = new TablePanel(filteredArtists, detailsPanel);
         StatsPanel statsPanel = new StatsPanel(filteredArtists);
         FilterPanel filterPanel = new FilterPanel(tablePanel, statsPanel, artists);
+
+        // Add a listener to update the details panel when a row in the table is selected
+        tablePanel.getTable().getSelectionModel().addListSelectionListener(e -> {
+            if (!e.getValueIsAdjusting()) { // Ensure final selection
+                int selectedRow = tablePanel.getTable().getSelectedRow();
+                if (selectedRow >= 0) {
+                    Artist selectedArtist = filteredArtists.get(selectedRow);
+                    detailsPanel.updateDetails(selectedArtist);
+                }
+            }
+        });
 
         // Add components to the frame
         frame.add(new JLabel("Female Artists Visualization", JLabel.CENTER), BorderLayout.NORTH);
         frame.add(filterPanel, BorderLayout.SOUTH);
         frame.add(tablePanel, BorderLayout.CENTER);
         frame.add(statsPanel, BorderLayout.EAST);
+        frame.add(detailsPanel, BorderLayout.WEST); // Add the details panel on the left side
 
         frame.setVisible(true);
     }

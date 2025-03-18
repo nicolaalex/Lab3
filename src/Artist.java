@@ -1,3 +1,5 @@
+// The Artist class represents an individual artist with details such as name, birth year, death year, nationality, works, and gender
+
 import java.util.Scanner;
 
 public class Artist {

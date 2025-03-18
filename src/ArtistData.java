@@ -1,3 +1,5 @@
+// Console Test that prints the number of artists and first and tenth artist.
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;

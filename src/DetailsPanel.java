@@ -1,26 +1,58 @@
-/*
-// DetailsPanel that shows details of a selected artist
-
 import javax.swing.*;
 import java.awt.*;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 
-class DetailsPanel extends JPanel {
-    private JLabel detailsLabel;
+public class DetailsPanel extends JPanel {
+    private JLabel nameLabel;
+    private JLabel birthYearLabel;
+    private JLabel deathYearLabel;
+    private JLabel nationalityLabel;
+    private JLabel worksLabel;
+    private JLabel genderLabel;
 
-    public DetailsPanel(JTable table) {
-        setLayout(new BorderLayout());
-        detailsLabel = new JLabel("Select an artist to see details");
-        add(detailsLabel, BorderLayout.CENTER);
-        table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
-            @Override
-            public void valueChanged(ListSelectionEvent e) {
-                if (!e.getValueIsAdjusting() && table.getSelectedRow() != -1) {
-                    detailsLabel.setText(table.getValueAt(table.getSelectedRow(), 0).toString());
-                }
-            }
-        });
+    public DetailsPanel() {
+        setLayout(new GridLayout(6, 2, 5, 5));
+        setBorder(BorderFactory.createTitledBorder("Artist Details"));
+
+        add(new JLabel("Name:"));
+        nameLabel = new JLabel();
+        add(nameLabel);
+
+        add(new JLabel("Birth Year:"));
+        birthYearLabel = new JLabel();
+        add(birthYearLabel);
+
+        add(new JLabel("Death Year:"));
+        deathYearLabel = new JLabel();
+        add(deathYearLabel);
+
+        add(new JLabel("Nationality:"));
+        nationalityLabel = new JLabel();
+        add(nationalityLabel);
+
+        add(new JLabel("Works:"));
+        worksLabel = new JLabel();
+        add(worksLabel);
+
+        add(new JLabel("Gender:"));
+        genderLabel = new JLabel();
+        add(genderLabel);
+    }
+
+    public void updateDetails(Artist artist) {
+        if (artist != null) {
+            nameLabel.setText(artist.getName());
+            birthYearLabel.setText(String.valueOf(artist.getBirthYear()));
+            deathYearLabel.setText(artist.getDeathYear() != null ? String.valueOf(artist.getDeathYear()) : "N/A");
+            nationalityLabel.setText(artist.getNationality());
+            worksLabel.setText(String.valueOf(artist.getWorks()));
+            genderLabel.setText(artist.getGender());
+        } else {
+            nameLabel.setText("");
+            birthYearLabel.setText("");
+            deathYearLabel.setText("");
+            nationalityLabel.setText("");
+            worksLabel.setText("");
+            genderLabel.setText("");
+        }
     }
 }
-*/

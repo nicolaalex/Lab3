@@ -1,4 +1,4 @@
-// The TablePanel class display and manage the table of artists in the GUI
+// The TablePanel class displays and manages the table of artists in the GUI
 
 import javax.swing.*;
 import javax.swing.table.*;
@@ -9,11 +9,13 @@ import java.util.List;
 public class TablePanel extends JPanel {
     private JTable table;
     private ArtistTableModel tableModel;
-    private boolean[] sortAscending; //sorting for each column (true for ascending, false for descending)
+    private boolean[] sortAscending; // Sorting for each column (true for ascending, false for descending)
     private JTableHeader tableHeader;
+    private DetailsPanel detailsPanel; // Reference to the details panel for updating selection
 
-    public TablePanel(List<Artist> artists) {
+    public TablePanel(List<Artist> artists, DetailsPanel detailsPanel) {
         setLayout(new BorderLayout());
+        this.detailsPanel = detailsPanel; // Store the details panel reference
 
         // Initialize table model with artist data and set up the table
         tableModel = new ArtistTableModel(artists);
@@ -29,11 +31,28 @@ public class TablePanel extends JPanel {
             }
         });
 
-        sortAscending = new boolean[tableModel.getColumnCount()]; // Initialize sorting order for each column
+        // Initialize sorting order for each column
+        sortAscending = new boolean[tableModel.getColumnCount()];
         updateColumnHeaders(-1); // Set no sorting initially
+
+        // Add selection listener to update the details panel when a row is selected
+        table.getSelectionModel().addListSelectionListener(e -> {
+            if (!e.getValueIsAdjusting()) { // Ensure final selection
+                int selectedRow = table.getSelectedRow();
+                if (selectedRow >= 0) {
+                    Artist selectedArtist = tableModel.getArtistAt(selectedRow);
+                    detailsPanel.updateDetails(selectedArtist);
+                }
+            }
+        });
 
         // Add table to the panel with scroll support
         add(new JScrollPane(table), BorderLayout.CENTER);
+    }
+
+    // Returns the JTable instance for external access (e.g., from the main class)
+    public JTable getTable() {
+        return table;
     }
 
     // Updates the data in the table
